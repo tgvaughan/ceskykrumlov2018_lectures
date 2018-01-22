@@ -42,10 +42,15 @@
                         center: false,
                         history: true,
                         transition: 'none',
+                        math: {
+                        mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js',
+                        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+                        },
 				dependencies: [
 					{ src: '{{site.baseurl}}/reveal.js/plugin/markdown/marked.js' },
 					{ src: '{{site.baseurl}}/reveal.js/plugin/markdown/markdown.js' },
 					{ src: '{{site.baseurl}}/reveal.js/plugin/notes/notes.js', async: true },
+                                        { src: '{{site.baseurl}}/reveal.js/plugin/math/math.js', async: true },
 					{ src: '{{site.baseurl}}/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 				]
 			});

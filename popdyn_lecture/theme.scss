@@ -19,7 +19,7 @@ $backgroundColor: #fff;
 $mainColor: #222;
 $headingColor: #222;
 
-$mainFontSize: 42px;
+$mainFontSize: 32px;
 $mainFont: 'Source Sans Pro', Helvetica, sans-serif;
 $headingFont: 'Source Sans Pro', Helvetica, sans-serif;
 $headingColor: $backgroundColor;
@@ -32,9 +32,9 @@ $linkColor: #2a76dd;
 $linkColorHover: lighten( $linkColor, 15% );
 $selectionBackgroundColor: lighten( $linkColor, 25% );
 
-$heading1Size: 1.8em;
-$heading2Size: 1.5em;
-$heading3Size: 1.3em;
+$heading1Size: 2.0em;
+$heading2Size: 1.8em;
+$heading3Size: 1.5em;
 $heading4Size: 1.0em;
 
 section.has-dark-background {
@@ -70,4 +70,24 @@ section.titlepage .institution {
 
 section.titlepage .date {
     padding-top: 1em;
+}
+
+.reveal p {
+    text-align: left;
+    margin-bottom: 0em;
+}
+
+.reveal blockquote {
+    background: $themeColor;
+    color: $backgroundColor;
+    font-style: normal;
+}
+
+.spaced li:not(:first-child) {
+    padding-top: 1em;
+}
+
+.reveal section img {
+    border: none;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
 }
