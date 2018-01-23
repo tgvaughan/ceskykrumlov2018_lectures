@@ -11,39 +11,70 @@ reveal:
   </div>
 
   <div class="authors">Tim Vaughan</div>
-  <div class="institution">Stadler group, D-BSSE, ETH Z&uuml;rich</div>
-  <div class="date">24<sup>th</sup> January, 2018</div>
+  <div class="institution">Stadler Group, D-BSSE, ETH Z&uuml;rich</div>
+  <div class="date">
+    Cesky Krumlov Workshop on Population and Speciation Genomics<br>
+    24<sup>th</sup> January, 2018</div>
+
+  <img data-src="cEvo_logo.png" style="width:200px;box-shadow:none;margin-top:5%">
+  <img data-src="bsse_logo.gif" style="width:200px;box-shadow:none;margin-top:5%">
+  <img data-src="eth_logo.png" style="width:200px;box-shadow:none;margin-top:5%">
 </section>
 
 <section>
   <h1>What is a population?</h1>
 
+  <div>
+    <img data-src="gene.png" style="height:150px">
+    <img data-src="virus.png" style="height:150px;padding-left:20px">
+    <img data-src="rabbit.jpg" style="height:150px;padding-left:20px">
+  </div>
+
   In our context, any group of evolving entities:
   <ul>
-    <li>Individual genes</li>
+    <li>Individual genes, sequence fragments</li>
     <li>Microscopic pathogens</li>
     <li>Macroscopic biological organisms</li>
     <li>Groups of organisms</li>
     <li>Entire species</li>
   </ul>
+
+  <div>
+    <img data-src="rabbit_warren.jpg" style="height:150px">
+    <img data-src="species.jpg" style="height:150px;padding-left:50px">
+  </div>
 </section>
 
 <section>
-  <h2>Demographic inference</h2>
+  <h1>Demographic inference</h1>
 
   <!-- Demographic inference: the advantage of sequences -->
   <!-- How sequences yield information about demography -->
 
-  <ul>
-    <li>Can use any event which occurs at a rate proportional to the population size.</li>
-    <li>Direct samples may fit this bill.</li>
-    <li>Genetic samples yield trees: information about past events.</li>
-  </ul>
+  <p>
+    Why involve genetics?
+  </p>
+    
+  <div style="width:100%; height:300px; position:relative">
+    <img data-src="popdyn_figure.png" style="position:absolute;top:0;left:0;width:1000px">
+    <img class="fragment" data-src="popdyn_figure_samp.png" style="position:absolute;top:0;left:0;width:1000px">
+    <img class="fragment" data-src="popdyn_figure_treesamp.png" style="position:absolute;top:0;left:0;width:1000px">
+  </div>
+  $\longleftarrow$ Time
+
+  <br>
+  <br>
+
+  <blockquote>
+    Genetic samples yield trees: information about events <b>ancestral</b> to samples.
+  </blockquote>
+
+  Ancestral event times may be informative when sample times aren't.
 </section>
 
 <section>
   <section class="center">
-    <h2>Bayesian Inference</h2>
+    <h1>Bayesian Inference</h1>
   </section>
 
   <section>
@@ -62,7 +93,7 @@ reveal:
       <li>Probability is subjective.</li>
     </ul>
 
-    <img style="box-shadow:none" data-src="dice_inference.svg">
+    <img data-src="dice_inference.svg">
     </section>
 
   <section>
@@ -130,52 +161,472 @@ reveal:
 
     <i>The posterior of one analysis may be the prior of a second.</i>
   </section>
-</section>
 
-<section>
-  <section class="center">
-    <h2>Bayesian phylogenetic inference</h2>
+  <section>
+    <h2>Bayesian credible intervals</h2>
+    <p>For probability distributions/densities of a single variable,
+    it is often useful to summarize the uncertainty in the value using
+    an interval. This is the 95% highest posteriod density (HPD)
+    interval:</p>
+
+    <br>
+
+    <img data-src="credible_interval.png"/>
+
+    <p>Interpretation is easy: 95% posterior probability that the truth lies within this interval.</p>
   </section>
 </section>
 
 <section>
-  <h2>Markov chain Monte Carlo (MCMC)</h2>
+  <section class="center">
+    <h1>Bayesian phylogenetic inference</h1>
+  </section>
+
+  <section>
+    <h2>The Phylogenetic Likelihood</h2>
+
+    <br>
+
+    <blockquote>
+      $$\LARGE P(A|T,\mu)$$
+    </blockquote>
+
+    <br>
+
+    <ul>
+      <li>$A$ is a multiple sequence alignment of $n$ sequences,</li>
+      <li>$T$ is a phylogenetic tree with $n$ leaves, and</li>
+      <li>$\mu$ are the parameters of the chosen substitution model.</li>
+      <li>Sites assumed to evolve independently, so likelihood is just a product of site pattern probabilities: note the obvious generalizations to multiple alignments that share a tree, or to phylogenetic networks that allow different siters to evolve under distinct trees.</li>
+    </ul>
+
+    <br><br>
+
+    <i style="text-align:left">We're Bayesians: we need a probability distribution for $T$!</i>
+    
+  </section>
+
+  <section>
+    <h2>The Phylogenetic Posterior</h2>
+
+    <br>
+
+    <blockquote>
+      $$P(T,\mu,\theta|A) = \frac{1}{P(A)} P(A|T,\mu)P(T|\theta)P(\mu,\theta)$$
+    </blockquote>
+
+    <br>
+
+    <ul>
+      <li>$P(T|\theta)$ is the "tree prior" or "phylodynamic likelihood" parameterized by $\theta$.</li>
+      <li>$P(\mu,\theta)=P(\mu)P(\theta)$ are the parameter priors.</li>
+    </ul>
+
+    <br><br>
+
+    <blockquote class="textbox">
+      <div class="title">Questions</div>
+      <ul>
+        <li>What is $P(A)$?</li>
+        <li>Is the tree prior really a prior?<br>(I.e. does it depend on the data?)</li>
+      </ul>
+    </blockquote>
+        
+  </section>
+
+  <section>
+    <h2>The Neutrality Assumption</h2>
+
+    <p> Because of the way we've factorized the joint probability for
+    the data and model parameters, we are implicitly assuming that our
+    alignment <b>could have</b> been produced in the following fashion:</p>
+
+    <div style="width:100%; height:350px; position:relative">
+      <img class="fragment" data-src="neutrality1.svg" style="position:absolute;top:0;left:0;width:1000px;">
+      <img class="fragment" data-src="neutrality2.svg" style="position:absolute;top:0;left:0;width:1000px;background-color:white;">
+      <img class="fragment" data-src="neutrality3.svg" style="position:absolute;top:0;left:0;width:1000px;background-color:white;">
+    </div>
+
+    <p class="fragment">Separating the process of tree generation from that of
+      sequence evolution implies neutrality.</p>
+  </section>
+
+  <section>
+    <h2>Tree Priors (Phylodynamic Liklihoods)</h2>
+
+    <div style="width:100%">
+      <div style="display:inline-block;vertical-align:middle;width:69%">
+        <ul>
+          <li>Tree priors allow us to specify a generative model for the genealogy.</li>
+          <li>While this model may not involve genetic evolution, it may depend on
+            speciation rates, population sizes, migration rates, etc. etc.</li>
+          <li>A huge fraction of phylogenetics inference research is focused on
+            developing and efficiently implementing tree priors!</li>
+        </ul>
+      </div>
+      <div style="display:inline-block;vertical-align:middle;width:30%">
+        <img data-src="SIRTree.svg" style="width:100%;">
+      </div>
+    </div>
+  </section>
+
 </section>
 
 <section>
-  <h2>Phylodynamic models</h2>
+  <section class="center">
+    <h1>Bayesian inference in practice</h1>
+  </section>
+
+
+  <section>
+    <h2>What's so difficult about this?</h2>
+
+    <blockquote class="fragment" style="text-align:center">
+      INTEGRATION
+    </blockquote>
+
+    <p class="fragment">Bayes' theorem has a troublesome denominator:
+      $$
+      P(\theta_M|D,M)=\frac{P(D|\theta_M,M)P(\theta_M|M)}{P(D|M)}
+      $$</p>
+    <p class="fragment">The quantity $P(D|M)$ is a normalizing constant, which is the
+      result of integrating the numerator over all $\theta_M$:
+      $$P(D|M)=\int P(D|\theta_M,M)P(\theta_M|M)d\theta_M$$</p>
+
+    <ul style="margin-top:-20px">
+      <li class="fragment">Unless you're <b>very</b> lucky, you can't do this
+        integral with pen and paper.</li>
+      <li class="fragment">If $\theta_M$ has many dimensions, you can't even do
+        this using a computer.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Monte Carlo methods</h2>
+
+    <div style="text-align:center">
+      <img style="width:80%" data-src="MonteCarlo.jpg">
+    </div>
+  </section>
+
+  <section>
+    <h2>Monte Carlo methods</h2>
+
+    <div style="text-align:center">
+      <img style="width:80%" data-src="casino.jpg">
+    </div>
+  </section>
+
+  <section>
+    <h2>Monte Carlo methods</h2>
+
+    <p style="padding-top:50px">In our context, Monte Carlo
+      methods are algorithms which produce random samples of
+      values in order to characterize a probability
+      distribution over those values.</p>
+
+    <p class="fragment" style="padding-top:50px">Usually, the algorithms we
+      deal with seek to produce an arbitrary number of
+      independent samples of $\theta_M$ drawn from the
+      posterior distribution $P(\theta_M|D,M)$.</p>
+  </section>
+
+  <section>
+    <h2>The Metropolis-Hastings algorithm</h2>
+
+    This algorithm produces samples from a distribution $f(x)$ by generating a
+    random walk over possible values of $x$.
+
+    <div style="width:800px;height:400px;position:relative;margin:0 auto">
+      <img class="fragment" data-src="MCMC1.svg"
+           style="position:absolute;top:0;left:0">
+      <img class="fragment" data-src="MCMC2.svg"
+           style="position:absolute;top:0;left:0;background-co
+                  lor:white">
+      <img class="fragment" data-src="MCMC3.svg"
+           style="position:absolute;top:0;left:0;background-co
+                  lor:white">
+      <img class="fragment" data-src="MCMC4.svg"
+           style="position:absolute;top:0;left:0;background-color:white">
+      <img class="fragment" data-src="MCMC5.svg"
+           style="position:absolute;top:0;left:0;background-color:white">
+      <img class="fragment" data-src="MCMC6.svg"
+           style="position:absolute;top:0;left:0;background-color:white">
+    </div>
+
+    <ol class="fragment">
+      <li> walk explores mostly high probability areas</li>
+      <li>algorithm <b>does not require normalized $f(x)$</b></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Metropolis-Hastings for trees</h2>
+
+    <p> For phylogenetic inference, need to produce a random walk in the
+      space of rooted time trees.  A variety of different
+      moves/"operators" are commonly used:</p>
+
+    <img data-src="TreeOperators.svg" style="width:60%">
+  </section>
+
+  <section>
+    <h2>Result of MCMC algorithm</h2>
+
+    <br>
+    <br>
+
+    <div style="width:800px;height:400px;position:relative;margin:0 auto">
+      <img class="current-visible" data-src="MCMC_trace.png"
+           style="position:absolute;top:0;left:0">
+      <img class="fragment" data-src="MCMC_density.png"
+           style="position:absolute;top:0;left:0">
+    </div>
+  </section>
+
+  <section>
+    <h2>Convergence and Mixing</h2>
+
+    <ul>
+      <li>Adjacent MCMC samples for $x$ are <b>correlated</b>.</li>
+      <li class="fragment">In the limit of an infinite number of steps between a pair
+        of samples, they will be independent draws.</li>
+      <li class="fragment">The first state of the MCMC chain is chosen
+        arbitrarily - it is not a draw from the
+        posterior.</li>
+    </ul>
+
+    <img style="width:100%" data-src="MCMC_burnin.svg">
+  </section>
+
+  <section>
+    <h2>What determines convergence and mixing rates?</h2>
+
+    <ul>
+      <li class="fragment">Convergence is affected by the starting state.</li>
+      <li class="fragment">Convergence and mixing are affected by</li>
+      <ul>
+        <li class="fragment">Proposals: how big are the steps in the random
+          walk? What direction are they in?</li>
+        <li class="fragment">The target density: multiple modes cause havoc!</li>
+      </ul>
+    </ul>
+
+  </section>
+
+  <section>
+    <h2>Assessing Convergence</h2>
+
+    The tried and true method for assessing convergence is to
+    compare the results of distinct chains generated from
+    independently selected initial conditions.
+
+    <img class="fragment" style="float:right;width:45%" data-src="MCMC_convergence_testing.png">
+
+    <div style="width:50%;margin-top:50px">
+      <ul>
+        <li class="fragment">Once satisfied, chains can be combined.</li>
+        <li class="fragment">Can run at the same time on a cluster.</li>
+        <li class="fragment">Doesn't necessarily prove convergence!</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Assessing Mixing</h2>
+
+    The key to assessing mixing is the autocorrelation function of the chain states:
+    <img class="fragment" style="width:100%" data-src="MCMC_acf.png">
+
+    <p class="fragment">The number of steps required for this function to decay to
+      within the vicinity of 0 is the gap between effectively independent samples,
+      $\tau$.</p>
+  </section>
+
+  <section>
+    <h2>Assessing Mixing (continued)</h2>
+
+    If $N$ is the total number of MCMC samples, we then define
+    $$N_{\text{eff}}=\frac{N}{\tau}$$
+    to be the <b>effective sample size</b> (ESS).
+
+    <p class="fragment">The ESS is a rough <i>estimate</i> of the number of actual
+      samples a chain has generated.</p>
+
+    <blockquote class="fragment">You should really only
+      consider the order of magnitude of the ESS.</blockquote>
+  </section>
+
+  <section>
+    <h2>Phylogenetic MCMC stopping criteria</h2>
+
+    <blockquote style="width:90%">
+      <ol>
+        <li>How can we tell when a phylogenetic MCMC calculation has reached equilibrium?</li>
+        <li>How do we know when we've collected enough samples?</li>
+      </ol>
+    </blockquote>
+
+    <ul>
+      <li>One approach is to compute ESS estimates for each parameter
+        and a number of tree summary statistics (e.g. tree height and
+        tree "length" &mdash; sum of all edge lengths).
+        <ul>
+          <li>Assume that once all of these scores are sufficiently high
+            (e.g. &gt; 200) we have adequately sampled the posterior.</li>
+        </ul>
+      </li>
+      <li>Examine output of several independent (and independently
+        initialized chains. A necessary (not sufficient) condition for
+        convergence is that sample distributions converge as the chains
+        converge to equilibrium.
+        <ul>
+          <li><b>Always</b> do this!</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
 </section>
 
 <section>
-  <h2>Kingman's Coalescent</h2>
+  <section class="center">
+    <h1>Demographic inference</h1>
+  </section>
+
+  <section>
+    <h2>Wright-Fisher model</h2>
+    <img data-src="WF_model.svg" style="width:100%">
+
+    <ul>
+      <li>Discrete generations, fixed population size.</li>
+      <li>Children from a given generation each select a parent uniformly at random from generation $\implies$ panmixia.</li>
+      <li>Average birth-rate per individual is 1 child per generation.</li>
+      <li>Average number of pairs per individual per generation is 0.5 pairs per generation.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Kingman's Coalescent</h2>
+    <img data-src="WF_model_sampled.svg" style="width:100%">
+
+    <ul style="font-size:0.8em">
+      <li>Consider $k$ lineages which are ancestral to sampled individuals.</li>
+      <li>There are $\binom{k}{2}$ potential pairings between sampled lineageages, compared to $\binom{N}{2}$ possible pairings between all individuals in the population.</li>
+      <li>Every pair produced by a WF parent has probability $p_c(k)=\binom{k}{2}/\binom{N}{2}$ of involving a pair of our ancestral lineages.</li>
+      <li>In limit $N\gg k$, coalescence probability per generation is $N\times0.5\times p_c=\binom{k}{2}\frac{1}{N}$.</li>
+      <li>Coalescence rate per unit time is then $\binom{k}{2}\frac{1}{Ng}$ where $g$ is the generation time.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Kingman's Coalescent</h2>
+    <img data-src="coalescent.svg" style="height:350px">
+
+    <ul style="font-size:0.8em">
+      <li>Backward-time Markov process that generates rooted time trees.</li>
+      <li>Probability of tree under model is
+        $$P(T|Ng)=\exp[-\Delta t_1\binom{k_1}{2}\frac{1}{Ng}]\frac{1}{Ng}\times\exp[-\Delta t_2\binom{k_2}{2}\frac{1}{Ng}]\frac{1}{Ng}\times\ldots$$</li>
+      <li>I.e. waiting times drawn from exponential distributions of mean $Ng/\binom{k}{2}$.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Parametric population size inference</h2>
+
+    <ul style="font-size:0.9em">
+      <li>It is possible to generalize the Wright-Fisher model to the case where population size is time dependent, i.e. $N(t)$. (Griffiths &amp; Tavar&eacute;, 1994.)</li>
+      <li>The corresponding coalescent distribution replaces the exponentially distributed waiting times with:
+        $$P(t_{i+1}-t_i=\Delta t|k_i)=\exp\left[-\binom{k_i}{2}\int_{t_i}^{t_{i+1}}\frac{dt}{N(t)g}\right]\binom{k_i}{2}\frac{1}{Ng}$$</li>
+        
+      <li>Such phylodynamic models are useful for selecting between qualitatively distinct hypotheses.</li>
+      <li>More recently, this approach has been extended by to account for population dynamics which arise as the result of birth-death processes in the coalescent limit. (Volz et al., 2009)</li>
+      <li>This is suitable for parametric inference when the underlying population dynamics are understood (and the coalescent limit is appropriate).</li>
+    </ul>
+
+    <br><br>
+
+    <span style="font-style:italic;text-align:center">But what if we know nothing about the dynamics?</span>
+  </section>
+
+  <section>
+    <h2>Non-parametric inference</h2>
+
+    <img data-src="skyline_schematic.svg" style="width:70%">
+  </section>
+
+  <section>
+    <h2>The Bayesian Skyline Plot</h2>
+  </section>
+
+  <section>
+    <h2>The Extended Bayesian Skyline Plot</h2>
+  </section>
 </section>
 
 <section>
-  <h2>Inference of population dynamics</h2>
+  <section class="center">
+    <h1>BEAST 2</h1>
+  </section>
+
+  <section>
+    <img data-src="beast2_logo.png">
+
+    <blockquote>BEAST 2 is a free (as in freedom) software
+      package that uses MCMC to perform Bayesian
+      phylogenetic inference.</blockquote>
+
+    <p>Project website: <a href="http://www.beast2.org">beast2.org</a></p>
+    <ul>
+      <li>Download software</li>
+      <li>Documentation and FAQs</li>
+      <li>Tutorials</li>
+      <li>...</li>
+    </ul>
+
+    <p>Fork/rewrite of BEAST 1.x, which is now a separately-maintained project.  (Important to specify BEAST 1 or 2 when asking for help!)</p>
+
+  </section>
+
+  <section>
+    <h2>BEAST components (and friends)</h2>
+
+    <ul>
+      <li><b>BEAST2</b>: Software implementing MCMC for model parameter and tree inference</li>
+      <li><b>BEAUti</b>: GUI for setting up the input file</li>
+      <li><b>Tracer</b>: Tool for summarizing parameter posteriors</li>
+      <li><b>Tree Annotator</b>: Tool for summarizing tree posteriors</li>
+      <li><b>FigTree</b>: Tool for visualising trees</li>
+    </ul>
+  </section>
+
+  <section>
+    <h3>BEAST Workflow</h3>
+
+    <img data-src="workflow.png">
+  </section>
+
 </section>
 
 <section>
-  <h2>Non-parametric inference</h2>
-</section>
+  <h1>Tutorial: EBSP</h1>
 
-<section>
-  <h2>The Bayesian Skyline Plot</h2>
-</section>
+  <br>
 
-<section>
-  <h2>The Extended Bayesian Skyline Plot</h2>
-</section>
+  <ol class="spaced">
+    <li>Download tutorial material for the EBSP tutorial from the BEAST 2  Český Krumlov page at <a href="http://beast2.org/ceskykrumlov2018">beast2.org/ceskykrumlov2018</a>.</li>
+    <li>Extract the ZIP file.</li>
+    <li>Open the PDF file "ebsp2-tut.pdf" and begin!</li>
+    <li>I will wrap up the tutorial 10-15 minutes before the end of the session.</li>
+  </ol>
 
-<section>
-  <h2>BEAST 2</h2>
+  <br>
+  <br>
+
+  <b style="text-align:center; font-size:1.5em">Enjoy!</b>
 </section>
 
 <section class="center">
-  <h2>Tutorial: EBSP</h2>
-</section>
-
-<section>
-  <h2>Tutorial Wrap-up</h2>
+  <h1>EBSP Tutorial Wrap-up</h1>
 </section>
 
 <!--

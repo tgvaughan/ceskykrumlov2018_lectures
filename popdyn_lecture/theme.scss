@@ -89,5 +89,18 @@ section.titlepage .date {
 
 .reveal section img {
     border: none;
+    box-shadow: none;
+}
+
+
+.reveal blockquote.textbox {
+    background: $backgroundColor;
+    color: $mainColor;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.reveal blockquote > div.title {
+    color: $backgroundColor;
+    background: $themeColor;
+    text-align: center;
 }
