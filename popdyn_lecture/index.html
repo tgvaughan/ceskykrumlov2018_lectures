@@ -13,7 +13,7 @@ reveal:
   <div class="authors">Tim Vaughan</div>
   <div class="institution">Stadler Group, D-BSSE, ETH Z&uuml;rich</div>
   <div class="date">
-    Cesky Krumlov Workshop on Population and Speciation Genomics<br>
+    Český Krumlov Workshop on Population and Speciation Genomics<br>
     24<sup>th</sup> January, 2018</div>
 
   <img data-src="cEvo_logo.png" style="width:200px;box-shadow:none;margin-top:5%">
@@ -32,11 +32,11 @@ reveal:
 
   In our context, any group of evolving entities:
   <ul>
-    <li>Individual genes, sequence fragments</li>
-    <li>Microscopic pathogens</li>
-    <li>Macroscopic biological organisms</li>
-    <li>Groups of organisms</li>
-    <li>Entire species</li>
+    <li class="fragment" >Individual genes, sequence fragments</li>
+    <li class="fragment" >Microscopic pathogens</li>
+    <li class="fragment" >Macroscopic biological organisms</li>
+    <li class="fragment" >Groups of organisms</li>
+    <li class="fragment" >Entire species</li>
   </ul>
 
   <div style="margin-top:-0.5em">
@@ -60,16 +60,16 @@ reveal:
     <img class="fragment" data-src="popdyn_figure_samp.png" style="position:absolute;top:0;left:0;width:1000px">
     <img class="fragment" data-src="popdyn_figure_treesamp.png" style="position:absolute;top:0;left:0;width:1000px">
   </div>
-  $\longleftarrow$ Time
+  Time $\longrightarrow$
 
   <br>
   <br>
 
-  <blockquote>
+  <blockquote class="fragment">
     Genetic samples yield trees: information about events <b>ancestral</b> to samples.
   </blockquote>
 
-  Ancestral event times may be informative when sample times aren't.
+  <span class="fragment">Ancestral event times may be informative when sample times aren't.</span>
 </section>
 
 <section>
@@ -89,11 +89,11 @@ reveal:
     </blockquote>
 
     <ul>
-      <li>Who is doing the believing?</li>
-      <li>Probability is subjective.</li>
+      <li class="fragment">Who is doing the believing?</li>
+      <li class="fragment">Probability is subjective.</li>
     </ul>
 
-    <img data-src="dice_inference.svg">
+    <img  class="fragment" data-src="dice_inference.svg">
     </section>
 
   <section>
@@ -104,18 +104,18 @@ reveal:
     <br>
 
     <ol>
-      <li>The product rule:
+      <li class="fragment">The product rule:
         $$P(A|B,C)P(B|C) = P(A,B|C)$$
         where $A,B$ represents $A$ <b>and</b> $B$.</li>
       <br>
 
-      <li>The sum rule:
+      <li class="fragment">The sum rule:
         $$P(A|B) + P(\bar{A}|B) = 1$$
         where $\bar{A}$ represents <b>not</b> $A$.</li>
     </ol>
 
     <br><br>
-    <p>That's it! You can now do Bayesian statistics.</p>
+    <p class="fragment">That's it! You can now do Bayesian statistics.</p>
   </section>
 
   <section>
@@ -129,19 +129,20 @@ reveal:
     <br>
 
     <ul>
-      <li> Our model allows us to evaluate $P(D|M,\theta_M)$.
-      <li> We want to know $P(\theta_M|D,M)$.
+      <li class="fragment"> Our model allows us to evaluate $P(D|M,\theta_M)$.
+      <li class="fragment"> We want to know $P(\theta_M|D,M)$.
     </ul>
 
     <br>
-    <br>
 
+    <div class="fragment">
     <p>Mechanically applying the product rule yields</p>
     <blockquote>
       $$\color{darkred}{P(\theta_M|D,M)} = \frac{\color{yellow}{P(D|M,\theta_M)}\color{darkblue}{P(\theta_M|M)}}{P(D|M)}$$
     </blockquote>
+    </div>
 
-    <p>Terms are named <b style="color:darkred">posterior</b>, <b style="color:#a0a000">likelihood</b> and <b style="color:darkblue">prior</b>.</p>
+    <p class="fragment">Terms are named <b style="color:darkred">posterior</b>, <b style="color:#a0a000">likelihood</b> and <b style="color:darkblue">prior</b>.</p>
   </section>
 
   <section>
@@ -152,14 +153,14 @@ reveal:
     <br>
 
     <ul class="spaced">
-      <li>$\color{darkblue}{P(\theta_M|M}$ describes our state of knowledge of $\theta_M$ <b style="color:darkblue">prior</b> to receiving $D$.  (May still depend on expert knowledge.)</li>
-      <li>$\color{#a0a000}{P(D|\theta,M_{\theta})}$ is the <b style="color:#a0a000">likelihood</b> of $\theta_M$ given $D$.  Describes how the data modifies our knowledge of $\theta_M$.</li>
-      <li>$\color{red}{P(\theta_M|D,M)}$ describes our state of knowledge <b style="color:darkred">after</b> receiving $D$.
+      <li class="fragment">$\color{darkblue}{P(\theta_M|M)}$ describes our state of knowledge of $\theta_M$ <b style="color:darkblue">prior</b> to receiving $D$.  (May still depend on expert knowledge.)</li>
+      <li class="fragment">$\color{#a0a000}{P(D|\theta,M_{\theta})}$ is the <b style="color:#a0a000">likelihood</b> of $\theta_M$ given $D$.  Describes how the data modifies our knowledge of $\theta_M$.</li>
+      <li class="fragment">$\color{red}{P(\theta_M|D,M)}$ describes our state of knowledge <b style="color:darkred">after</b> receiving $D$.
     </ul>
 
     <br><br>
 
-    <i>The posterior of one analysis may be the prior of a second.</i>
+    <i class="fragment">The posterior of one analysis may be the prior of a second.</i>
   </section>
 
   <section>
@@ -194,15 +195,15 @@ reveal:
     <br>
 
     <ul>
-      <li>$A$ is a multiple sequence alignment of $n$ sequences,</li>
-      <li>$T$ is a phylogenetic tree with $n$ leaves, and</li>
-      <li>$\mu$ are the parameters of the chosen substitution model.</li>
-      <li>Sites assumed to evolve independently, so likelihood is just a product of site pattern probabilities: note the obvious generalizations to multiple alignments that share a tree, or to phylogenetic networks that allow different siters to evolve under distinct trees.</li>
+      <li class="fragment">$A$ is a multiple sequence alignment of $n$ sequences,</li>
+      <li class="fragment">$T$ is a phylogenetic tree with $n$ leaves, and</li>
+      <li class="fragment">$\mu$ are the parameters of the chosen substitution model.</li>
+      <li class="fragment">Sites assumed to evolve independently, so likelihood is just a product of site pattern probabilities: note the obvious generalizations to multiple alignments that share a tree, or to phylogenetic networks that allow different sites to evolve under distinct trees.</li>
     </ul>
 
     <br><br>
 
-    <i style="text-align:left">We're Bayesians: we need a probability distribution for $T$!</i>
+    <i class="fragment" style="text-align:left">We're Bayesians: we need a probability distribution for $T$!</i>
     
   </section>
 
@@ -218,13 +219,13 @@ reveal:
     <br>
 
     <ul>
-      <li>$P(T|\theta)$ is the "tree prior" or "phylodynamic likelihood" parameterized by $\theta$.</li>
-      <li>$P(\mu,\theta)=P(\mu)P(\theta)$ are the parameter priors.</li>
+      <li class="fragment">$P(T|\theta)$ is the "tree prior" or "phylodynamic likelihood" parameterized by $\theta$.</li>
+      <li class="fragment">$P(\mu,\theta)=P(\mu)P(\theta)$ are the parameter priors.</li>
     </ul>
 
     <br><br>
 
-    <blockquote class="textbox">
+    <blockquote class="textbox fragment">
       <div class="title">Questions</div>
       <ul>
         <li>What is $P(A)$?</li>
@@ -258,9 +259,9 @@ reveal:
       <div style="display:inline-block;vertical-align:middle;width:69%">
         <ul>
           <li>Tree priors allow us to specify a generative model for the genealogy.</li>
-          <li>While this model may not involve genetic evolution, it may depend on
+          <li class="fragment">While this model may not involve genetic evolution, it may depend on
             speciation rates, population sizes, migration rates, etc. etc.</li>
-          <li>A huge fraction of phylogenetics inference research is focused on
+          <li class="fragment">A huge fraction of phylogenetics inference research is focused on
             developing and efficiently implementing tree priors!</li>
         </ul>
       </div>
@@ -468,7 +469,7 @@ reveal:
     </blockquote>
 
     <ul>
-      <li>One approach is to compute ESS estimates for each parameter
+      <li class="fragment">One approach is to compute ESS estimates for each parameter
         and a number of tree summary statistics (e.g. tree height and
         tree "length" &mdash; sum of all edge lengths).
         <ul>
@@ -476,7 +477,7 @@ reveal:
             (e.g. &gt; 200) we have adequately sampled the posterior.</li>
         </ul>
       </li>
-      <li>Examine output of several independent (and independently
+      <li class="fragment">Examine output of several independent (and independently
         initialized chains. A necessary (not sufficient) condition for
         convergence is that sample distributions converge as the chains
         converge to equilibrium.
@@ -498,10 +499,10 @@ reveal:
     <img data-src="WF_model.svg" style="width:100%">
 
     <ul>
-      <li>Discrete generations, fixed population size.</li>
-      <li>Children from a given generation each select a parent uniformly at random from generation $\implies$ panmixia.</li>
-      <li>Average birth-rate per individual is 1 child per generation.</li>
-      <li>Average number of pairs per individual per generation is 0.5 pairs per generation.</li>
+      <li class="fragment">Discrete generations, fixed population size.</li>
+      <li class="fragment">Children from a given generation each select a parent uniformly at random from generation $\implies$ panmixia.</li>
+      <li class="fragment">Average birth-rate per individual is 1 child per generation.</li>
+      <li class="fragment">Average number of pairs per individual per generation is 0.5 pairs per generation.</li>
     </ul>
   </section>
 
@@ -511,10 +512,10 @@ reveal:
 
     <ul style="font-size:0.8em">
       <li>Consider $k$ lineages which are ancestral to sampled individuals.</li>
-      <li>There are $\binom{k}{2}$ potential pairings between sampled lineageages, compared to $\binom{N}{2}$ possible pairings between all individuals in the population.</li>
-      <li>Every pair produced by a WF parent has probability $p_c(k)=\binom{k}{2}/\binom{N}{2}$ of involving a pair of our ancestral lineages.</li>
-      <li>In limit $N\gg k$, coalescence probability per generation is $N\times0.5\times p_c=\binom{k}{2}\frac{1}{N}$.</li>
-      <li>Coalescence rate per unit time is then $\binom{k}{2}\frac{1}{Ng}$ where $g$ is the generation time.</li>
+      <li class="fragment">There are $\binom{k}{2}$ potential pairings between sampled lineageages, compared to $\binom{N}{2}$ possible pairings between all individuals in the population.</li>
+      <li class="fragment">Every pair produced by a WF parent has probability $p_c(k)=\binom{k}{2}/\binom{N}{2}$ of involving a pair of our ancestral lineages.</li>
+      <li class="fragment">In limit $N\gg k$, coalescence probability per generation is $N\times0.5\times p_c=\binom{k}{2}\frac{1}{N}$.</li>
+      <li class="fragment">Coalescence rate per unit time is then $\binom{k}{2}\frac{1}{Ng}$ where $g$ is the generation time.</li>
     </ul>
   </section>
 
@@ -524,9 +525,9 @@ reveal:
 
     <ul style="font-size:0.8em">
       <li>Backward-time Markov process that generates rooted time trees.</li>
-      <li>Probability of tree under model is
-        $$P(T|Ng)=\exp[-\Delta t_1\binom{k_1}{2}\frac{1}{Ng}]\frac{1}{Ng}\times\exp[-\Delta t_2\binom{k_2}{2}\frac{1}{Ng}]\frac{1}{Ng}\times\ldots$$</li>
-      <li>I.e. waiting times drawn from exponential distributions of mean $Ng/\binom{k}{2}$.</li>
+      <li class="fragment">Probability of tree under model is
+        $$P(T|Ng)=\exp\left[-\Delta t_1\binom{k_1}{2}\frac{1}{Ng}\right]\frac{1}{Ng}\times\exp\left[-\Delta t_2\binom{k_2}{2}\frac{1}{Ng}\right]\frac{1}{Ng}\times\ldots$$</li>
+      <li class="fragment">I.e. waiting times drawn from exponential distributions of mean $Ng/\binom{k}{2}$.</li>
     </ul>
   </section>
 
@@ -535,17 +536,17 @@ reveal:
 
     <ul style="font-size:0.9em">
       <li>It is possible to generalize the Wright-Fisher model to the case where population size is time dependent, i.e. $N(t)$. (Griffiths &amp; Tavar&eacute;, 1994.)</li>
-      <li>The corresponding coalescent distribution replaces the exponentially distributed waiting times with:
+      <li class="fragment">The corresponding coalescent distribution replaces the exponentially distributed waiting times with:
         $$P(t_{i+1}-t_i=\Delta t|k_i)=\exp\left[-\binom{k_i}{2}\int_{t_i}^{t_{i+1}}\frac{dt}{N(t)g}\right]\binom{k_i}{2}\frac{1}{Ng}$$</li>
         
-      <li>Such phylodynamic models are useful for selecting between qualitatively distinct hypotheses.</li>
-      <li>More recently, this approach has been extended by to account for population dynamics which arise as the result of birth-death processes in the coalescent limit. (Volz et al., 2009)</li>
-      <li>This is suitable for parametric inference when the underlying population dynamics are understood (and the coalescent limit is appropriate).</li>
+      <li class="fragment">Such phylodynamic models are useful for selecting between qualitatively distinct hypotheses.</li>
+      <li class="fragment">More recently, this approach has been extended by to account for population dynamics which arise as the result of birth-death processes in the coalescent limit. (Volz et al., 2009)</li>
+      <li class="fragment">This is suitable for parametric inference when the underlying population dynamics are understood (and the coalescent limit is appropriate).</li>
     </ul>
 
     <br><br>
 
-    <span style="font-style:italic;text-align:center">But what if we know nothing about the dynamics?</span>
+    <span class="fragment" style="font-style:italic;text-align:center">But what if we know nothing about the dynamics?</span>
   </section>
 
   <section>
@@ -555,10 +556,10 @@ reveal:
 
     <ul style="font-size:0.8em;margin-top:-1em">
       <li>Introduced by Pybus, Rambaut and Harvey (2000).</li>
-      <li>Piecewise constant coalescent estimates may be interpreted
+      <li class="fragment">Piecewise constant coalescent estimates may be interpreted
       as estimates of the harmonic mean of the population size within
       each interval.</li>
-      <li>Maximum-likelihood estimates from fixed tree yield a remarkably robust and cheap means of demographic inference.
+      <li class="fragment">Maximum-likelihood estimates from fixed tree yield a remarkably robust and cheap means of demographic inference.
     </ul>
   </section>
 
@@ -573,7 +574,7 @@ reveal:
         <li>Due to Drummond et al., 2005, applies generalized skyline
           plot (Strimmer and Pybus, 2001) as a tree prior for Bayesian
           inference of population dynamics.</li>
-        <li>Requires specifying a "group number" parameter.</li>
+        <li class="fragment">Requires specifying a group size parameter.</li>
       </ul>
     </div>
 
@@ -582,15 +583,12 @@ reveal:
   <section>
     <h2>The Extended Bayesian Skyline Plot</h2>
 
-    <ul>
-      <li>Method of Heled and Drummond (2008) which avoids specifying
-        a group size and allows inference from multiple loci.</li>
-    </ul>
-
     <img data-src="EBSP_schematic.svg" style="width:70%">
 
     <ul>
-      <li>Each coalescent is a potential population gradient switch event, a decision which is inferred separately for each event.</li>
+      <li>Method of Heled and Drummond (2008) which avoids specifying
+        a group size and allows inference from multiple loci.</li>
+      <li class="fragment" >Each coalescent is a potential population gradient switch event, a decision which is inferred separately for each event.</li>
     </ul>
   </section>
 
@@ -601,7 +599,7 @@ reveal:
 
     <ul>
       <li>Distributing roughly the same number of samples across multiple loci yields dramatically improves the potential depth of the history that can be probed.</li>
-      <li>(Antient DNA or serial sampling yields additional benefits.)</li>
+      <li class="fragment" >(Antient DNA or serial sampling yields additional benefits.)</li>
     </ul>
   </section>
 </section>
@@ -626,7 +624,7 @@ reveal:
       <li>...</li>
     </ul>
 
-    <p>Fork/rewrite of BEAST 1.x, which is now a separately-maintained project.  (Important to specify BEAST 1 or 2 when asking for help!)</p>
+    <p class="fragment" >Fork/rewrite of BEAST 1.x, which is now a separately-maintained project.  (Important to specify BEAST 1 or 2 when asking for help!)</p>
 
   </section>
 
@@ -639,6 +637,7 @@ reveal:
       <li><b>Tracer</b>: Tool for summarizing parameter posteriors</li>
       <li><b>Tree Annotator</b>: Tool for summarizing tree posteriors</li>
       <li><b>FigTree</b>: Tool for visualising trees</li>
+      <li>...</li>
     </ul>
   </section>
 
@@ -658,14 +657,14 @@ reveal:
   <ol class="spaced">
     <li>Download tutorial material for the EBSP tutorial from the BEAST 2  Český Krumlov page at <a href="http://beast2.org/ceskykrumlov2018">beast2.org/ceskykrumlov2018</a>.</li>
     <li>Extract the ZIP file.</li>
-    <li>Open the PDF file "ebsp2-tut.pdf" and begin!</li>
+    <li>Open the PDF file "ebsp2-tut.pdf" and follow the instructions.</li>
     <li>I will wrap up the tutorial 10-15 minutes before the end of the session.</li>
   </ol>
 
   <br>
   <br>
 
-  <b style="text-align:center; font-size:1.5em">Enjoy!</b>
+  <b style="text-align:center; font-size:1.5em">Begin!</b>
 </section>
 
 <!--
