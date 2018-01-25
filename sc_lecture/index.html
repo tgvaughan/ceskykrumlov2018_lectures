@@ -21,8 +21,597 @@ reveal:
   <img data-src="eth_logo.png" style="width:200px;box-shadow:none;margin-top:5%">
 </section>
 
-<!--
-    
-    * Defining population structure
+<!-- Introduction to structured populations and SC -->
 
--->
+<section>
+  <h1>What is Phylogeography?</h1>
+
+  <div style="position:relative; width:800px; margin:0 auto;">
+    <div class="fragment current-visible">
+      <br>
+      <blockquote>
+        Phylogeography is a field of study concerned with the
+        principles and processes governing the geographic
+        distributions of genealogical lineages, especially
+        those within and among closely related species.
+      </blockquote>
+      <div class="quote-cite">
+        John Avise,
+        <em>"Phylogeography: The History and Formation of Species."</em>
+        Harvard University Press, 2000.
+      </div>
+    </div>
+    <div class="figure fragment" style="position:absolute; top:0; left:0;">
+      <p>Early human migrations:</p>
+      <img style="width:800px" data-src="Spreading_homo_sapiens_la.svg"/>
+      <div class="cite">Wikipedia</div>
+    </div>
+  </div>
+
+</section>
+
+<section>
+  <h1>Phylogeographic inference</h1>
+
+  <div style="position:relative; width:800px; margin:0 auto;">
+    <div class="fragment current-visible">
+      <p>Usual data:</p>
+      <img style="width:800px" data-src="data.svg"/>
+    </div>
+    <div class="fragment" style="position:absolute; top:0; left:0;">
+      <p>Common questions:</p>
+      <div style="width:800px; height:600px; position:relative">
+        <img style="position: absolute; top:0; left:0; width:700px;"
+             data-src="questions5.svg">
+        <img class="fragment" style="position: absolute; top:0; left:0; width:700px;"
+             data-src="questions4.svg">
+        <img class="fragment" style="position: absolute; top:0; left:0; width:700px;"
+             data-src="questions3.svg">
+        <img class="fragment" style="position: absolute; top:0; left:0; width:700px;"
+             data-src="questions2.svg">
+        <img class="fragment" style="position: absolute; top:0; left:0; width:700px;"
+             data-src="questions.svg">
+      </div>
+    </div>
+
+</section>
+
+<section>
+  <h1>Bayesian Phylogeographic Inference</h1>
+
+  <br>
+
+  <p>The usual phylogenetic posterior:</p>
+  <blockquote style="width:80%">
+    $$P(T,\mu,\theta|A) = \frac{1}{P(A)} P(A|T,\mu)P(T|\theta)P(\mu)P(\theta)$$
+  </blockquote>
+  <ul>
+    <li>$P(A|T,\mu)$ is the <i>tree likelihood</i></li>
+    <li>$P(T|\theta)$ is the <i>tree prior</i></li>
+    <li>$P(\mu)$ and $P(\theta)$ are the <i>parameter priors</i></li>
+  </ul>
+
+  <br>
+  <br>
+
+  <blockquote class="fragment alert">
+    <em>Where does geography fit in?</em>
+  </blockquote>
+</section>
+
+<section>
+  <h1>Bayesian Phylogeographic Inference</h1>
+
+  <p>Currently two main classes of models:</p>
+  <ol>
+    <li class="fragment"> Mugration models:
+      <ul>
+        <li class="fragment">Given tree and root location, what is the probability of sample locations?</li>
+        <li class="fragment">Exist in contiuous and discrete forms.</li>
+        <li class="fragment">Developed by Phillipe Lemey et al. <a class="citep">(PLoS Comp Biol 2009, MBE 2010)</a>
+      </ul>
+    <li class="fragment"> Structured population models:
+      <ul>
+        <li class="fragment">given sequences and locations, what is the probability of location-coloured tree?</li>
+        <li class="fragment">Currently mostly discrete.</li>
+        <li class="fragment">Earliest examples by <a class="citep">Hudson (1990)</a> and <a class="citep">Notohara (1990)</a>.</li>
+      </ul>
+  </ol>
+</section>
+
+<section>
+  <section class="center">
+    <h1>Mugration models</h1>
+  </section>
+
+  <section>
+    <h2>Discrete mugration model</h2>
+
+    <br>
+
+    <div class="figure" style="position: relative; width:800px; height:600px; margin: 0 auto">
+      <img class="fragment current-visible" style="position: absolute; top:0; left:0; width:800px;"
+           data-src="mugration4.svg"/>
+      <img class="fragment current-visible" style="position: absolute; top:0; left:0; width:800px;"
+           data-src="mugration3.svg"/>
+      <img class="fragment current-visible" style="position: absolute; top:0; left:0; width:800px;"
+           data-src="mugration2.svg"/>
+      <img class="fragment current-visible" style="position: absolute; top:0; left:0; width:800px;"
+           data-src="mugration.svg"/>
+    </div>
+  </section>
+
+  <section>
+    <h2>Recap: Bayesian Phylogenetic Inference</h2>
+
+    <br>
+    <br>
+
+    <p>The usual phylogenetic posterior is:</p>
+    <blockquote style="width:80%">
+      $$P(T,\mu,\theta|A,L) = \frac{1}{P(A)} P(A|T,\mu) P(T|\theta)P(\mu)P(\theta)$$
+    </blockquote>
+    <p>where</p>
+    <ul>
+      <li>$A$ is a sequence alignment,</li>
+      <li>$T$ is the tree.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Inference: Modified tree likelihood</h2>
+
+    <p>The standard phylogenetic posterior is modified:</p>
+    <blockquote style="width:80%">
+      \begin{align}
+      P(T,\mu,\theta|A,L) =& \frac{1}{P(A)P(L)} P(A|T,\mu)P(L|T,M)\\
+      &\times P(T|\theta)P(\mu)P(\theta)
+      \end{align}
+    </blockquote>
+    <p>where</p>
+    <ul>
+      <li>$L$ are the sampled locations, and</li>
+      <li>$M$ is a matrix specifying the random walk.</li>
+    </ul>
+
+    <p class="fragment">Note the similarity between the two tree <b>likelihood</b> terms.</p>
+    <blockquote class="fragment">
+      Mugration models treat location as just another trait/character.
+    </blockquote>
+  </section>
+
+  <section>
+    <h2>Sampling assumption</h2>
+
+    <br>
+
+    <p>A very important assumption made by the mugration model posterior:</p>
+    <blockquote class="alert fragment">
+      Samples are assumed to be collected in a manner that is blind to their location.
+    </blockquote>
+
+    <ul>
+      <li class="fragment">Mugration models use sample location as data.</li>
+      <li class="fragment">Just as for genetic data, non-random sampling procedures will bias results.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Equivalent population genetic model</h2>
+
+    <p>A helpful way to visualise the mugration model is to imagine its effect on the
+      population as a whole:</p>
+
+    <div style="position:relative; width:800px; height:400px; margin:0 auto;">
+      <img class="fragment current-visible" width="800" data-src="WF4.svg"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none
+                  ;"/>
+      <img class="fragment current-visible" width="800" data-src="WF3.svg"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none
+                  ;"/>
+      <img class="fragment current-visible" width="800" data-src="WF2.svg"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none
+                  ;"/>
+      <img class="fragment" width="800" data-src="WF.svg"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;"/>
+    </div>
+
+    <ul>
+      <li class="fragment">Mugration =&gt; stochastically varying subpopulation sizes.</li>
+      <li class="fragment">A "neutral" model.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Continuous extensions</h2>
+
+    <p class="fragment">Use a contiunous diffusion process
+      in place of the discrete random walk:</p>
+
+    <div style="width:100%; display:table">
+      <div style="display: table-row">
+        <div class="fragment figure" style="width:400px; display:table-cell">
+          <img data-src="mugration_continuous.png"/>
+          <div class="cite">Lemey et al., MBE, 2010</div>
+        </div>
+        <div class="fragment figure" style="width:400px; display:table-cell">
+          <img data-src="mugration_sphere.png"/>
+          <div class="cite">Bouckaert, PeerJ, 2016</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="fragment">Essential features of mugration
+      model remain, <em>including sensitivity to sampling.</em></p>
+  </section>
+
+</section>
+
+<section>
+  <section class="center">
+    <h1>Structured population models</h1>
+  </section>
+
+  <section>
+    <h2>Structured Wright-Fisher Model</h2>
+
+    Imagine two sub-populations connected by weak migration:
+
+    <div style="position:relative; width:800px; height:400px; margin:0 auto;">
+      <img class="fragment current-visible"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;"
+           width="800" data-src="StructuredWF5.svg" />
+      <img class="fragment current-visible"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;"
+           width="800" data-src="StructuredWF4.svg" />
+      <img class="fragment current-visible"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;"
+           width="800" data-src="StructuredWF3.svg" />
+      <img class="fragment current-visible"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;"
+           width="800" data-src="StructuredWF2.svg" />
+      <img class="fragment"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;"
+           width="800" data-src="StructuredWF.svg" />
+    </div>
+
+    <ul>
+      <li class="fragment">Model as described by Notohara, 1990.</li>
+      <li class="fragment">Island populations are held constant by respective carrying capacities.</li>
+    </ul>
+
+
+  </section>
+
+  <section>
+    <h2>Structured Coalescent</h2>
+
+    <ul>
+      <li class="fragment">Backwards-in-time process that generates both
+        the tree and ancestral locations.</li>
+    </ul>
+
+    <div style="position:relative; width:800px; height:400px; margin:0 auto;">
+      <img class="fragment current-visible"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc.svg" />
+      <img class="fragment current-visible"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc2.svg" />
+      <img class="fragment current-visible"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc3.svg" />
+      <img class="fragment current-visible"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc4.svg" />
+      <img class="fragment"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc5.svg" />
+      <img class="fragment"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc6.svg" />
+      <img class="fragment"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc7.svg" />
+      <img class="fragment"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc8.svg" />
+      <img class="fragment"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc9.svg" />
+      <img class="fragment"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc10.svg" />
+      <img class="fragment"
+           style="margin:0px;padding:0px;position:absolute;top:0;left:0;box-shadow:none;background:white"
+           width="800" data-src="sc11.svg" />
+    </div>
+
+    <ul>
+      <li class="fragment">Parameterized by migration rates and (sub)population sizes.</li>
+    </ul>
+
+  </section>
+
+  <section>
+    <h2>Inference: Modified tree prior</h2>
+
+    <p>Again, the standard phylogenetic posterior is modified:</p>
+    <blockquote style="width:80%">
+      \begin{align}
+      P(T,\mu,\theta|A,L) &= \frac{1}{P(A)} P(A|T,\mu)\\
+      &\times P(T,C|\vec{N},\bar{M},L)P(\mu)P(\theta)
+      \end{align}
+    </blockquote>
+    <p>where</p>
+    <ul>
+      <li>$L$ are the sampled locations, </li>
+      <li>$\bar{M}$ is the migration rate matrix, and</li>
+      <li>$C$ are the ancestral locations on the tree.</li>
+    </ul>
+
+    <p class="fragment">The sample locations and SC model affect the <b>tree prior</b>.</p>
+    <blockquote class="fragment">
+      The <em>shape</em> of the tree is affected by structure.
+    </blockquote>
+
+  </section>
+
+  <section>
+    <h2>Sampling assumption</h2>
+
+    <ul>
+      <li class="fragment">The coalescent tree prior is
+        explicitly conditioned on the sample times</li>
+      <li class="fragment">Similarly, the structured coalescent tree prior
+        is conditioned on sample locations.</li>
+    </ul>
+
+    <blockquote class="fragment">
+      The strucured coalescent makes no assumption about
+      the manner in which samples are collected with
+      respect to location.
+    </blockquote>
+
+    <ul>
+      <li class="fragment">Sample distribution not used as data.</li>
+      <li class="fragment">Uneven sampling can reduce inference power, but will <em>not</em> bias results!</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Birth-death Migration Model</h2>
+
+    <ul>
+      <li class="fragment">Introduced by K&uuml;hnert et al. <a class="citep">(MBE 2016)</a>.</li>
+      <li class="fragment">A birth-death model of population dynamics in which individuals are permitted to change location due to discrete migration events.</li>
+      <li class="fragment">Migrations may be correlated with births, but not deaths.</li>
+      <li class="fragment">Sampling process explicitly modelled.</li>
+      <li class="fragment">Birth and death rates may be location-dependent: not&nbsp;"neutral"! (Tree shape affected by structure.)</li>
+      <li class="fragment">Inference is performed using modified tree prior.</li>
+
+    </ul>
+  </section>
+</section>
+
+<section>
+  <section class="center">
+    <h2>Phylogeographic inference in BEAST&nbsp;2</h2>
+  </section>
+
+  <section>
+    <h2>Discrete Phylogeography</h2>
+
+    <div class="fragment">
+      <p>Required packages:</p>
+      <blockquote>
+        <ul>
+          <li>BEAST_CLASSIC</li>
+        </ul>
+      </blockquote>
+    </div>
+
+    <br>
+
+    <ul>
+      <li class="fragment">Very well supported, BEAUti analysis setup.</li>
+      <li class="fragment">Tutorial on <a href="http://beast2.org/tutorials">beast2.org/tutorials</a>.</li>
+      <li class="fragment">Very fast, allows inference of which migrations are necessary to describe data.</li>
+      <li class="fragment">Prone to sampling biases.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Discrete Phylogeography</h2>
+
+    <p>DensiTree output:</p>
+    <img data-src="coloured_densitree.png" style="width:50%"/>
+  </section>
+
+  <section>
+    <h2>Continuous Spherical Phylogeography</h2>
+
+    <div class="fragment">
+      <p>Required packages:</p>
+      <blockquote>
+        <ul>
+          <li>GEO_SPHERE</li>
+        </ul>
+      </blockquote>
+    </div>
+
+    <br>
+
+    <ul>
+      <li class="fragment">Also well supported and BEAUti analysis setup.</li>
+      <li class="fragment">Tutorial on <a href="http://beast2.org/tutorials">beast2.org/tutorials</a>.</li>
+      <li class="fragment">Output can be summarized using <a href="http://kuleuven.ac.be/aidslab/phylogeography/SPREAD.html">Spread</a> and visualized using Google Earth.</li>
+
+      <li class="fragment">Prone to sampling biases.</li>
+    </ul>
+
+  </section>
+
+  <section>
+    <h2>Continuous Spherical Phylogeography</h2>
+
+    <p>Google Earth visualization example:</p>
+    <img data-src="ge_example.png" style="width:80%"/>
+
+  </section>
+
+  <section>
+    <h2>Structured Coalescent (Full model)</h2>
+
+    <div class="fragment">
+      <p>Required packages:</p>
+      <blockquote>
+        <ul>
+          <li>MultiTypeTree</li>
+        </ul>
+      </blockquote>
+    </div>
+
+    <br>
+
+    <ul>
+      <li class="fragment">Newer analysis option, BEAUti setup.</li>
+      <li class="fragment">Tutorial at <a href="http://beast1.org/tutorials">beast2.org/tutorials</a>.</li>
+      <li class="fragment">No built-in assumptions regarding sampling procedure.</li>
+      <li class="fragment">More computationally demanding than mugration
+        models, only smaller numbers of demes are
+        feasible.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Structured Coalescent (Full model)</h2>
+    <img data-src="fig05.svg" style="width:80%"/>
+  </section>
+
+  <section>
+    <h2>Structured Coalescent (Approximation)</h2>
+
+    <div class="fragment">
+      <p>Required packages:</p>
+      <blockquote>
+        <ul>
+          <li>BASTA</li>
+        </ul>
+      </blockquote>
+    </div>
+
+    <br>
+
+    <ul>
+      <li class="fragment">Very new analysis option, <b>NO BEAUti setup</b>.</li>
+      <li class="fragment">Temporary tutorial at <a href="http://github.com/tgvaughan/MultitypeTree/wiki">gihub.com/tgvaughan/MultiTypeTree/wiki</a>.</li>
+      <li class="fragment">Approximation cuts down on the computational demands of the SC model, allowing many more locations to be considered.</li>
+      <li class="fragment">Produces very similar results to MultiTypeTree, but only samples internal node locations (not mid-edge locations).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Structured Coalescent (Approximation)</h2>
+
+    <p>Comparisson between mugration implementation and full and approx. SC models.</p>
+
+    <div class="figure">
+      <img data-src="basta_figure.png" style="width:100%"/>
+      <div class="cite">De Maio et al., PLoS Genetics, 2015</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Structured Coalescent (Approximation: BASTA)</h2>
+
+    <p>Posterior comparisons:</p>
+
+    <div class="figure">
+      <img data-src="basta_figure2.png" style="width:80%"/>
+      <div class="cite">De Maio et al., PLoS Genetics, 2015</div>
+    </div>
+  </section>
+
+   <section>
+    <h2>Structured Coalescent (Approximation: MASCOT)</h2>
+
+  </section>
+ 
+
+  <section>
+    <h2>Birth-death Migration Model</h2>
+
+    <div class="fragment">
+      <p>Required packages:</p>
+      <blockquote>
+        <ul>
+          <li>MASTER</li>
+          <li>MultiTypeTree</li>
+          <li>SA</li>
+        </ul>
+      </blockquote>
+    </div>
+
+    <br>
+
+    <ul>
+      <li class="fragment">While capable of performing inference, BDMM has not yet been officially released.</li>
+      <li class="fragment">Information can be found on the GitHub repository: <a href="https://github.com/denisekuehnert/bdmm">github.com/denisekuehnert/bdmm</a>.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Birth-death Migration Model</h2>
+
+    <p>Teaser: time and space-dependent rate parameter estimation!</p>
+
+    <div style="width:100%; display:table">
+      <div style="display: table-row">
+        <div class="figure" style="width:600px; display:table-cell">
+          <img data-src="main_BDMM.png"/>
+        </div>
+        <div class="figure" style="width:400px; display:table-cell">
+          <img data-src="R0_BDMM.png"/>
+          <div class="cite">K&uuml;hnert et al., MBE, 2016</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</section>
+
+
+<section>
+  <h1>Summary</h1>
+
+  <ul>
+    <li class="fragment">Bayesian phylogeographic methods provide a
+      systematic way of combining geographic and genetic
+      data.</li>
+    <li class="fragment">BEAST 2 provides two main routes:
+      <ul>
+        <li class="fragment">Mugration models</li>
+        <li class="fragment">Structured population models</li>
+      </ul>
+    </li>
+    <li class="fragment">Mugration models tend to allow computationally
+      efficient inference, but have questionable foundation
+      and are subject to sampling biases.</li>
+    <li class="fragment">Structured population models may be more closely tied to
+      the biology and don't necessarily depend on the samplling process.</li>
+  </ul>
+
+</section>
+
+
+<section>
+  <h1>Tutorial 1: MultiTypeTree</h1>
+</section>
+
+<!-- Introduction to MASCOT -->
+
+<section>
+  <h1>Tutorial 2: MASCOT</h1>
+</section>
+</section>
