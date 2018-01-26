@@ -24,33 +24,6 @@ reveal:
 <!-- Introduction to structured populations and SC -->
 
 <section>
-  <h1>What is Phylogeography?</h1>
-
-  <div style="position:relative; width:800px; margin:0 auto;">
-    <div class="fragment current-visible">
-      <br>
-      <blockquote>
-        Phylogeography is a field of study concerned with the
-        principles and processes governing the geographic
-        distributions of genealogical lineages, especially
-        those within and among closely related species.
-      </blockquote>
-      <div class="quote-cite">
-        John Avise,
-        <em>"Phylogeography: The History and Formation of Species."</em>
-        Harvard University Press, 2000.
-      </div>
-    </div>
-    <div class="figure fragment" style="position:absolute; top:0; left:0;">
-      <p>Early human migrations:</p>
-      <img style="width:800px" data-src="Spreading_homo_sapiens_la.svg"/>
-      <div class="cite">Wikipedia</div>
-    </div>
-  </div>
-
-</section>
-
-<section>
   <h1>Phylogeographic inference</h1>
 
   <div style="position:relative; width:800px; margin:0 auto;">
@@ -112,7 +85,7 @@ reveal:
       </ul>
     <li class="fragment"> Structured population models:
       <ul>
-        <li class="fragment">given sequences and locations, what is the probability of location-coloured tree?</li>
+        <li class="fragment">given sequences and locations, what is the probability of (location-coloured) tree?</li>
         <li class="fragment">Currently mostly discrete.</li>
         <li class="fragment">Earliest examples by <a class="citep">Hudson (1990)</a> and <a class="citep">Notohara (1990)</a>.</li>
       </ul>
@@ -332,6 +305,28 @@ reveal:
   </section>
 
   <section>
+    <h2>Structured Coalescent</h2>
+
+    <div style="float:left;width:50%">
+      <img style="width:100%" data-src="structured_coalescent.svg">
+    </div><div style="float:right;width:50%">
+
+      <ul class="spaced">
+        <li>Coalescence rate in deme $i$:
+          $$\binom{k_i}{2}\frac{1}{N_ig}$$
+        </li>
+        <li>Migration rate (backward) $i\rightarrow j$:
+          $$k_i m_{ij}$$</li>
+
+      </ul>
+
+      <p class="fragment" style="margin-top:1em">Note that $m_{ij} =
+      q_{ji}\frac{N_j}{N_i}$ where $q_{ji}$ is the forward-time
+      migration rate from $j$ to $i$.</p>
+    </div>
+  </section>
+
+  <section>
     <h2>Inference: Modified tree prior</h2>
 
     <p>Again, the standard phylogenetic posterior is modified:</p>
@@ -473,23 +468,22 @@ reveal:
     <br>
 
     <ul>
-      <li class="fragment">Newer analysis option, BEAUti setup.</li>
-      <li class="fragment">Tutorial at <a href="http://beast1.org/tutorials">beast2.org/tutorials</a>.</li>
       <li class="fragment">No built-in assumptions regarding sampling procedure.</li>
-      <li class="fragment">More computationally demanding than mugration
-        models, only smaller numbers of demes are
+      <li class="fragment">Much more computationally demanding than
+        mugration models, only smaller numbers of demes are
         feasible.</li>
     </ul>
   </section>
 
   <section>
     <h2>Structured Coalescent (Full model)</h2>
-    <img data-src="fig05.svg" style="width:80%"/>
+    <img data-src="fig05.svg" style="width:75%"/>
   </section>
 
   <section>
     <h2>Structured Coalescent (Approximation: BASTA)</h2>
 
+    <p style="font-size:0.8em;text-align:right;color:red" class="cite">De Maio et al., PLoS Genetics, 2015</p>
     <div class="fragment">
       <p>Required packages:</p>
       <blockquote>
@@ -502,10 +496,9 @@ reveal:
     <br>
 
     <ul>
-      <li class="fragment">Very new analysis option, <b>NO BEAUti setup</b>.</li>
-      <li class="fragment">Temporary tutorial at <a href="http://github.com/tgvaughan/MultitypeTree/wiki">gihub.com/tgvaughan/MultiTypeTree/wiki</a>.</li>
-      <li class="fragment">Approximation cuts down on the computational demands of the SC model, allowing many more locations to be considered.</li>
+      <li class="fragment">Approximation which cuts down on the computational demands of the SC model, allowing many more locations to be considered.</li>
       <li class="fragment">Produces very similar results to MultiTypeTree, but only samples internal node locations (not mid-edge locations).</li>
+      <li class="fragment">XML set-up tutorial at <a href="http://github.com/tgvaughan/MultitypeTree/wiki">gihub.com/tgvaughan/MultiTypeTree/wiki</a>.</li>
     </ul>
   </section>
 
@@ -515,7 +508,7 @@ reveal:
     <p>Comparisson between mugration implementation and full and approx. SC models.</p>
 
     <div class="figure">
-      <img data-src="basta_figure.png" style="width:100%"/>
+      <img data-src="basta_figure.png" style="width:80%"/>
       <div class="cite">De Maio et al., PLoS Genetics, 2015</div>
     </div>
   </section>
@@ -523,19 +516,43 @@ reveal:
   <section>
     <h2>Structured Coalescent (Approximation: BASTA)</h2>
 
-    <p>Posterior comparisons:</p>
-
     <div class="figure">
-      <img data-src="basta_figure2.png" style="width:80%"/>
+      <img data-src="basta_figure2.png" style="width:70%"/>
       <div class="cite">De Maio et al., PLoS Genetics, 2015</div>
     </div>
   </section>
 
    <section>
     <h2>Structured Coalescent (Approximation: MASCOT)</h2>
+    <p style="font-size:0.8em;text-align:right;color:red" class="cite">M&uuml;ller et al., MBE, 2017</p>
+
+    <div class="fragment">
+      <p>Required packages:</p>
+      <blockquote>
+        <ul>
+          <li>MASCOT</li>
+        </ul>
+      </blockquote>
+    </div>
+
+    <ul>
+      <li class="fragment">Numerically integrates over ancestral locations.</li>
+      <li class="fragment">Doing this exactly is possible, but solving requires $D^n$ ODEs.</li>
+      <li class="fragment">MASCOT uses an approximation that instead requires $D\times n$ ODEs.</li>
+      <li class="fragment">Better than BASTA at accounting for the interaction between lineage states.</li>
+    </ul>
+
 
   </section>
- 
+
+   <section>
+    <h2>Structured Coalescent (Approximation: MASCOT)</h2>
+
+    <div class="figure">
+      <img data-src="mascot_fig1.png" style="width:70%"/>
+      <div class="cite">M&uuml;ller et al., MBE, 2017</div>
+    </div>
+  </section>
 
   <section>
     <h2>Birth-death Migration Model</h2>
@@ -554,15 +571,15 @@ reveal:
     <br>
 
     <ul>
-      <li class="fragment">While capable of performing inference, BDMM has not yet been officially released.</li>
-      <li class="fragment">Information can be found on the GitHub repository: <a href="https://github.com/denisekuehnert/bdmm">github.com/denisekuehnert/bdmm</a>.</li>
+      <li class="fragment">Implements structured birth-death-sampling model inference.</li>
+      <li class="fragment">Tutorial available at <a href="https://taming-the-beast.github.io">taming-the-beast.github.io</a>.</li>
     </ul>
   </section>
 
   <section>
     <h2>Birth-death Migration Model</h2>
 
-    <p>Teaser: time and space-dependent rate parameter estimation!</p>
+    <p>Time and space-dependent birth/death parameter estimation!</p>
 
     <div style="width:100%; display:table">
       <div style="display: table-row">
@@ -594,8 +611,8 @@ reveal:
       </ul>
     </li>
     <li class="fragment">Mugration models tend to allow computationally
-      efficient inference, but have questionable foundation
-      and are subject to sampling biases.</li>
+      efficient inference under a neutrality assumption, but are
+      subject to sampling biases.</li>
     <li class="fragment">Structured population models may be more closely tied to
       the biology and don't necessarily depend on the samplling process.</li>
   </ul>
@@ -605,11 +622,29 @@ reveal:
 
 <section>
   <h1>Tutorial 1: MultiTypeTree</h1>
+
+  <br>
+
+  <ol class="spaced">
+    <li>Open the link for the first of the Structured Coalescent tutorials (MultiTypeTree) from the BEAST 2 Český Krumlov page at <a href="http://beast2.org/ceskykrumlov2018">beast2.org/ceskykrumlov2018</a>.</li>
+    <li>Follow the instructions.</li>
+    <li>I will wrap up the tutorial at approximately 9 pm.</li>
+  </ol>
+
 </section>
 
 <!-- Introduction to MASCOT -->
 
 <section>
   <h1>Tutorial 2: MASCOT</h1>
+
+  <br>
+
+  <ol class="spaced">
+    <li>Open the link for the second of the Structured Coalescent tutorials (MASCOT) from the BEAST 2 Český Krumlov page at <a href="http://beast2.org/ceskykrumlov2018">beast2.org/ceskykrumlov2018</a>.</li>
+    <li>Follow the instructions.</li>
+    <li>I will wrap up the tutorial at approximately 20 minutes before the end of the session.</li>
+  </ol>
+
 </section>
 </section>
